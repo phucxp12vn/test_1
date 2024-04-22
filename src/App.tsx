@@ -1,5 +1,5 @@
 import './App.css'
-import SearchUsers from './SearchUsers'
+import SearchUsers from '@/features/SearchUsers'
 
 function App() {
 
