@@ -2,7 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "./SearchUsers.type";
 import { fetchUsers as fetchUsersApi } from "@/api/searchUIsersApi";
 
-type ApiStatus = "IDLE" | "PENDING" | "SUCCESS" | "ERROR";
+export enum ApiStatusEnum {
+  IDLE = "IDLE",
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
+  ERROR = "ERROR",
+}
+
+type ApiStatus = `${ApiStatusEnum}`;
 
 export type UsersState = {
   users: User[];
@@ -25,14 +32,14 @@ export const searchUsersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state, _action) => {
-      state.fetchUsersStatus = "PENDING";
+      state.fetchUsersStatus = ApiStatusEnum.PENDING;
     });
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.fetchUsersStatus = "SUCCESS";
+      state.fetchUsersStatus = ApiStatusEnum.SUCCESS;
       state.users = action.payload;
     });
     builder.addCase(fetchUsers.rejected, (state, _action) => {
-      state.fetchUsersStatus = "ERROR";
+      state.fetchUsersStatus = ApiStatusEnum.ERROR;
     });
   },
 });

@@ -14,7 +14,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { fetchUsers, clearUsers } from "./SearchUsersSlice";
+import { fetchUsers, clearUsers, ApiStatusEnum } from "./SearchUsersSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 
 function DisplayUserTable() {
@@ -47,7 +47,7 @@ function DisplayUserTable() {
                 {user.login}
               </TableCell>
               <TableCell>{user.type}</TableCell>
-              <TableCell align="right">{100}</TableCell>
+              <TableCell align="right">{user.score}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -96,13 +96,13 @@ function SearchUsers() {
           onChange={handleInputQueryUser}
         />
       </Box>
-      {fetchUsersStatus === "PENDING" && <CircularProgress />}
-      {fetchUsersStatus === "SUCCESS" && (
+      {fetchUsersStatus === ApiStatusEnum.PENDING && <CircularProgress />}
+      {fetchUsersStatus === ApiStatusEnum.SUCCESS && (
         <Box>
           <DisplayUserTable />
         </Box>
       )}
-      {fetchUsersStatus === "ERROR" && (
+      {fetchUsersStatus === ApiStatusEnum.ERROR && (
         <p>There was a problem searching users</p>
       )}
     </>
