@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "./SearchUsers.type";
+import { fetchUsers as fetchUsersApi } from "@/api/searchUIsersApi";
 
 type ApiStatus = "IDLE" | "PENDING" | "SUCCESS" | "ERROR";
 
@@ -13,18 +14,7 @@ const initialState: UsersState = {
   fetchUsersStatus: "IDLE",
 };
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", (_: string) => {
-  console.log("call api search user");
-  const dummyData = [
-    {
-      id: 1,
-      login: "octocat",
-      avatar_url: "https://avatars.githubusercontent.com/u/1272629?s=80&v=4",
-      type: "User",
-    },
-  ] as User[];
-  return dummyData;
-});
+export const fetchUsers = createAsyncThunk("users/fetchUsers", fetchUsersApi);
 export const searchUsersSlice = createSlice({
   name: "users",
   initialState,
